@@ -1,6 +1,3 @@
-# 0.1:add jre.
-# 0.2:delete curl tar packages.
-
 FROM debian:wheezy
 
 # to avoid 'debconf: unable to initialize frontend: Dialog'

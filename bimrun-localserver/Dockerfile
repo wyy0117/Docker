@@ -1,5 +1,3 @@
-# 0.1:add run war package.
-
 FROM airdock/oracle-jdk:jre-8u111
 
 # workspace

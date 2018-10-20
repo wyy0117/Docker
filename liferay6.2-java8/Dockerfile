@@ -1,7 +1,3 @@
-# 0.1:add liferay.
-# 0.2:delete packages.
-# 0.3:optimize liferary init process.
-
 FROM wyy349093330/debian-java8:0.2
 
 # install wget unzip

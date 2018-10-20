@@ -1,5 +1,3 @@
-# 0.1 add tomcat log and application data mapping.
-
 FROM tomcat:8.5-jre8
 
 # create data folder
