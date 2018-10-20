@@ -1,4 +1,4 @@
-FROM wyy349093330/debian-java8:0.2
+FROM wyy349093330/debian-java8:1.0
 
 # install wget unzip
 RUN apt-get update \
