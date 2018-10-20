@@ -5,9 +5,9 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \
     && apt-get install -y curl tar \
-    && (curl -s -k -L -C - -b "oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-x64.tar.gz | tar xfz - -C /opt) \
-    && mv /opt/jdk1.8.0_171/jre /opt/jre1.8.0_171 \
-    && mv /opt/jdk1.8.0_171/lib/tools.jar /opt/jre1.8.0_171/lib/ext \
-    && rm -rf /opt/jdk1.8.0_171 \
-    && ln -s /opt/jre1.8.0_171 /opt/java \
+    && (curl -s -k -L -C - -b "oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x64.tar.gz | tar xfz - -C /opt) \
+    && mv /opt/jdk1.8.0_191/jre /opt/jre1.8.0_191 \
+    && mv /opt/jdk1.8.0_191/lib/tools.jar /opt/jre1.8.0_191/lib/ext \
+    && rm -rf /opt/jdk1.8.0_191 \
+    && ln -s /opt/jre1.8.0_191 /opt/java \
     && rm -rf /var/lib/apt/lists/*
