@@ -11,7 +11,7 @@ This image is base on wyy349093330/debian-java8,which provided java8 environment
 1. create a folder named logs under your liferay home.    
 1. run liferay,if you run it in development,you can add debug port(8085) mapping.
     ```
-    docker run --rm -itd --name liferay6.2 -p 8080:8080 -v ${pwd}/liferay-home:/var/liferay-home wyy349093330/liferay6.2-java8:${version} 
+    docker run --rm -itd --name liferay6.2 -p 8080:8080 -v ${pwd}/liferay-home:/var/liferay-home wyy349093330/liferay6.2-java8:1.0
     ```    
 
 
