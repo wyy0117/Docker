@@ -25,8 +25,11 @@ RUN rm -rf /opt/liferay-portal-6.2-ce-ga6/tomcat-7.0.62/logs/ \
 && ln -s /var/liferay-home/logs /opt/liferay-portal-6.2-ce-ga6/tomcat-7.0.62/ \
 && ln -s /var/liferay-home/portal-setup-wizard.properties /opt/liferay-portal-6.2-ce-ga6/
 
+# add liferay workspace folder
+RUN mkdir -p /var/workspace
+
 # volumes
-VOLUME ["/var/liferay-home"]
+VOLUME ["/var/liferay-home","/var/workspace"]
 
 # Ports
 EXPOSE 8080
