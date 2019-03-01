@@ -4,5 +4,5 @@ this image is a tomcat8.5 and use jre8,you can mapping tomcat logs and some data
 1. or,you can add your local app folder mount to directory of "/usr/local/tomcat/webapps/ROOT"
 1. run it.
     ```
-    docker run --name threedserver -it -p 8280:8080 -v ~/threedserver/logs:/usr/local/tomcat/logs -v ~/threedserver/data:/var/data -v ~/threedserver/app:/usr/local/tomcat/webapps/ROOT -d threedserver:2.0
+    docker run --name threedserver -it -p 8280:8080 -v ~/threedserver/logs:/usr/local/tomcat/logs -v ~/threedserver/data:/var/data -v ~/threedserver/workspace:/var/workspace -v ~/threedserver/app:/usr/local/tomcat/webapps/ROOT -d threedserver:2.0
     ```
