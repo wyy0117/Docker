@@ -32,8 +32,7 @@ RUN mkdir -p /var/workspace
 VOLUME ["/var/liferay-home","/var/workspace"]
 
 # Ports
-EXPOSE 8080
-EXPOSE 8085
+EXPOSE 8080 8085
 
 # Set JAVA_HOME
 ENV JAVA_HOME /opt/java
