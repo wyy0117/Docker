@@ -1,4 +1,4 @@
-FROM wyy349093330/debian-java8:1.0
+FROM openjdk:8-jre-stretch
 
 # install wget unzip
 RUN apt-get update \
@@ -34,8 +34,7 @@ VOLUME ["/var/liferay-home","/var/workspace"]
 # Ports
 EXPOSE 8080 8085
 
-# Set JAVA_HOME
-ENV JAVA_HOME /opt/java
+ENV LANG C.UTF-8
 
 # EXEC
 CMD ["run"]
