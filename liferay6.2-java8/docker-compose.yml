@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  liferay:
+    image: wyy349093330/liferay6.2-java8:3.0
+
+    container_name: liferay6.2
+
+    ports:
+      - 8180:8080
+      - 8185:8085
+
+    volumes:
+      - /home/wyy/docker/data/liferay6.2:/var/liferay-home
+      - /home/wyy/docker/data/workspace:/var/workspace
+
