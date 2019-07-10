@@ -1,11 +1,13 @@
-FROM airdock/oracle-jdk:jre-8u111
+FROM openjdk:8-jre-stretch
 
-# workspace
-RUN mkdir -p /var/workspace
+RUN echo 'Asia/Shanghai' > /etc/timezone
 
-WORKDIR /var/workspace
+WORKDIR /app
+VOLUME /app/tmp /app/logs /app/data
+
+COPY ./target/*.war app.war
 
 EXPOSE 8080
 
 # start app
-ENTRYPOINT java -jar /var/workspace/*.war
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.war"]

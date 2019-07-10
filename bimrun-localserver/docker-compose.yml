@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  localserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: localserver
+
+    ports:
+      - 8080:8080
+
+    volumes:
+      - ~/logs:/app/logs
+      - ~/temp:/app/tmp
+      - ~/data:/app/data

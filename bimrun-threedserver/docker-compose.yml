@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  threedserver:
+    image: wyy349093330/bimrun-threedserver:4.0
+
+    container_name: threedserver
+
+    ports:
+      - 8280:8080
+      - 8285:8085
+
+    volumes:
+      - ~/threedserver/logs:/usr/local/tomcat/logs
+      - ~/threedserver/data:/var/data
+      - ~/threedserver/workspace:/var/workspace
+      - ~/threedserver/app:/usr/local/tomcat/webapps/ROOT
