@@ -1,10 +1,5 @@
-This image is base on openjdk:8-jre-stretch,which provided java8 environment.Put liferay home and tomcat logs out of the image.
-
-#### build detail
-1. install wget,unzip
-1. install liferay,you can install from local source file or download from official network.
-1. config tomcat's setenv.sh,set Xmx=4096m,timezone=GMT+08,add debug port(8085).
-1. add bundle property file
+This image is base on debian:stable-slim and provided java8 environment.
+Put liferay home and tomcat logs out of the image.
 
 #### how to use it
 1. first of all pull the image.
@@ -13,5 +8,9 @@ This image is base on openjdk:8-jre-stretch,which provided java8 environment.Put
     ```
     docker run --rm -itd --name liferay6.2 -p 8080:8080 -v ${pwd}/liferay-home:/var/liferay-home -v ${pwd}/workspace:/var/workspace wyy349093330/liferay6.2-java8:$VERSION
     ```    
-
-
+1. or you can use docker-compose
+    ```
+    docker-compose up -d --build --force-recreate
+    ```    
+#### build image
+if you want to build the image by yourself,you should put the jre and liferay under folder before build.

@@ -1,7 +1,10 @@
 version: '3.7'
 services:
   liferay:
-    image: wyy349093330/liferay6.2-java8:3.0
+    image: wyy349093330/liferay6.2-java8:4.0
+    #    build:
+    #      context: .
+    #      dockerfile: Dockerfile
 
     container_name: liferay6.2
 
