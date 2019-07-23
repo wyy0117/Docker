@@ -24,7 +24,7 @@ ENV PATH $PATH:$JRE_HOME/bin
 # 	&& rm liferay-portal-tomcat-6.2-ce-ga6-20160112152609836.zip
 
 # add config for start
-RUN /bin/echo -e 'CATALINA_OPTS="\$CATALINA_OPTS -Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true  -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT+08 -Xmx4096m" \nCATALINA_OPTS="\$CATALINA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8085" '>/opt/liferay-portal-6.2-ce-ga6/tomcat-7.0.62/bin/setenv.sh
+RUN /bin/echo -e 'CATALINA_OPTS="$CATALINA_OPTS -Dfile.encoding=UTF8 -Djava.net.preferIPv4Stack=true  -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT+08 -Xmx4096m" \nCATALINA_OPTS="$CATALINA_OPTS -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8085" '>/opt/liferay-portal-6.2-ce-ga6/tomcat-7.0.62/bin/setenv.sh
 
 # add bundle property
 RUN /bin/echo -e 'liferay.home=/var/liferay-home \ninclude-and-override=/var/liferay-home/portal-ext.properties'>/opt/liferay-portal-6.2-ce-ga6/portal-bundle.properties
