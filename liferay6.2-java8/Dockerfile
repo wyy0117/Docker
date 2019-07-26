@@ -14,6 +14,9 @@ ENV JRE_HOME /opt/jre1.8.0_221
 ENV CLASSPATH $JRE_HOME/lib/rt.jar:$JRE_HOME/lib/ext
 ENV PATH $PATH:$JRE_HOME/bin
 
+# timezone
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
 # install liferay
  COPY liferay-portal-tomcat-6.2-ce-ga6-20160112152609836.zip /opt
  RUN unzip /opt/liferay-portal-tomcat-6.2-ce-ga6-20160112152609836.zip -d /opt \
