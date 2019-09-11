@@ -11,6 +11,11 @@ Put liferay home and tomcat logs out of the image.
 1. or you can use docker-compose
     ```
     docker-compose up -d --build --force-recreate
-    ```    
+    ```
+#### note
+the default -Xmx=4g,if you want to resize it just do it like
+```
+docker run --rm -itd -e JAVA_OPTS='-Xmx6g' --name liferay6.2 -p 8080:8080 -v ${pwd}/liferay-home:/var/liferay-home -v ${pwd}/workspace:/var/workspace wyy349093330/liferay6.2-java8:$VERSION
+```
 #### build image
 if you want to build the image by yourself,you should put the jre and liferay under folder before build.
