@@ -1,0 +1,8 @@
+version: '3.7'
+services:
+  decimonservice:
+    build:
+      context: ""
+      dockerfile: Dockerfile
+    image: docker-wine
+    container_name: docker-wine
