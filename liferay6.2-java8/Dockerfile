@@ -1,3 +1,6 @@
+FROM wyy349093330/jrecontainer:8u221 as jre
+FROM wyy349093330/liferay:6.2.5 as liferay
+
 FROM debian:stable-slim
 
 # install wget unzip
@@ -6,11 +9,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # install jre
-COPY jre-8u221-linux-x64.tar.gz /opt/.
-RUN tar -zxvf /opt/jre-8u221-linux-x64.tar.gz -C /opt/ \
-    && rm /opt/jre-8u221-linux-x64.tar.gz
-
-ENV JRE_HOME /opt/jre1.8.0_221
+COPY --from=jre /jre/jre1.8.0_221 /usr/local/.
+ENV JRE_HOME /usr/local/jre1.8.0_221
 ENV CLASSPATH $JRE_HOME/lib/rt.jar:$JRE_HOME/lib/ext
 ENV PATH $PATH:$JRE_HOME/bin
 
@@ -18,9 +18,7 @@ ENV PATH $PATH:$JRE_HOME/bin
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
 # install liferay
- COPY liferay-portal-tomcat-6.2-ce-ga6-20160112152609836.zip /opt
- RUN unzip /opt/liferay-portal-tomcat-6.2-ce-ga6-20160112152609836.zip -d /opt \
- 	&& rm /opt/liferay-portal-tomcat-6.2-ce-ga6-20160112152609836.zip
+COPY --from=liferay /liferay/liferay-portal-6.2-ce-ga6 /opt/.
 
 #RUN wget http://downloads.sourceforge.net/project/lportal/Liferay%20Portal/6.2.5%20GA6/liferay-portal-tomcat-6.2-ce-ga6-20160112152609836.zip \
 # 	&& unzip liferay-portal-tomcat-6.2-ce-ga6-20160112152609836.zip -d /opt \
