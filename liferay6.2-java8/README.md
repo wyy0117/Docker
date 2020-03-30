@@ -19,3 +19,9 @@ docker run --rm -itd -e JAVA_OPTS='-Xmx6g' --name liferay6.2 -p 8080:8080 -v ${p
 ```
 #### build image
 if you want to build the image by yourself,you should put the jre and liferay under folder before build.
+
+---
+#### the official image 
+```
+docker run -itd --name liferay6.2.5-official -p 8080:8080 -v ~/docker/data/liferay6.2.5-official/data:/opt/liferay/data -v ~/docker/data/liferay6.2.5-official/logs:/opt/liferay/logs -v ~/docker/data/liferay6.2.5-official/logs:/opt/liferay/tomcat/logs -v ~/docker/data/liferay6.2.5-official/deploy:/opt/liferay/deploy -v ~/docker/data/liferay6.2.5-official/portal-ext.properties:/opt/liferay/portal-ext.properties liferay/portal:6.2.5-ga6
+```
