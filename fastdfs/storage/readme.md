@@ -39,7 +39,7 @@
 1. 基础路径
     ```
     base_path=/home/dfs
-        ```
+    ```
 自定义修改      
 1. tracker_server的地址  
     ```
@@ -52,4 +52,4 @@
 1. group_name与storage的group_name保持一致
     ```
     group_name=group1
-        ```                
+    ```                
