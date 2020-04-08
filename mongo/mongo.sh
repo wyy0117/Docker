@@ -1,1 +1,8 @@
-docker run --rm --name mongo -p 27017:27017 -v ~/docker/data/mongo/dbdata:/data/db -d mongo:3.4
+#!/usr/bin/env bash
+base_path=~/docker/data/mongo
+container_name=mongo
+port=27017
+
+mkdir -p $base_path/dbdata
+
+docker run -itd--name $container_name -p $port:27017 -v $base_path/dbdata:/data/db  mongo:3.4

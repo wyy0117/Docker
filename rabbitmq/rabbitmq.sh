@@ -1,1 +1,11 @@
-docker run -itd --name rabbitmq -v ~/docker/data/rabbitmq:/var/lib/rabbitmq -p 15672:15672 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin rabbitmq:3-management
+#!/usr/bin/env bash
+base_path=~/docker/data/rabbitmq/
+container_name=rabbitmq
+port1=5672
+port2=15672
+username=admin
+password=admin
+
+mkdir -p $base_path
+
+docker run -itd --name $container_name -v $base_path:/var/lib/rabbitmq -p $port1:5672 -p $port2:15672 -e RABBITMQ_DEFAULT_USER=$username -e RABBITMQ_DEFAULT_PASS=$password rabbitmq:3-management

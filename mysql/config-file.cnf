@@ -1,0 +1,12 @@
+[mysql]
+default-character-set=utf8
+
+[mysqld]
+character-set-server=utf8
+lower_case_table_names=1
+
+skip-host-cache
+skip-name-resolve
+default-time-zone = '+08:00'
+max_allowed_packet=1024M
+max_connections=1000
