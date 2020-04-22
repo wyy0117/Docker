@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-base_path=~/docker/data/nginx
+base_path=~/docker/data/httpserver
 container_name=httpserver
 port=80
 
