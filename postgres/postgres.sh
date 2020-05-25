@@ -12,6 +12,7 @@ docker run -d \
     --name $container_name \
     -v $base_path/conf/postgres.conf:/etc/postgresql/postgresql.conf \
     -e PGDATA=/var/lib/postgresql/data/pgdata \
+    -e TZ=Asia/Shanghai \
     -e POSTGRES_PASSWORD=$password \
     -v $base_path/data:/var/lib/postgresql/data \
     -p $port:5432 \
