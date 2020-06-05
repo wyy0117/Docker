@@ -9,8 +9,9 @@ cluster.name: elasticsearch-cluster
 # ------------------------------------ Node ------------------------------------
 #
 # 节点名，默认随机指定一个name列表中名字。集群中node名字不能重复
-node.name: es-node02
+node.name: es-node00
 node.data: true
+node.master: true
 #
 # ----------------------------------- Paths ------------------------------------
 #
@@ -37,20 +38,20 @@ bootstrap.memory_lock: true
 # 绑定的ip地址, 可以是hostname或者ip地址，用来和集群中其他节点通信，同时会设置network.publish_host,以及network.bind_host
 network.host: 0.0.0.0
 #设置绑定的ip地址，生产环境则是实际的服务器ip，这个ip地址关系到实际搜索服务通信的地址，和服务在同一个集群环境的可以用内网ip，默认和network.host相同。
-network.publish_host: 192.168.10.90
+network.publish_host: 192.168.10.91
 #设置绑定的ip地址，可以是ipv4或ipv6的，默认和network.host相同。
 network.bind_host: 0.0.0.0
 #节点间交互的tcp端口，默认是9300
-transport.tcp.port: 9302
+transport.tcp.port: 9300
 #设置对外服务的http端口，默认为9200
-http.port: 9202
+http.port: 9200
 transport.tcp.compress: true
 # 设置是否压缩tcp传输时的数据，默认为false，不压缩。
 #
 # --------------------------------- Discovery ----------------------------------
 #
 # 启动时初始化集群的服务发现的各个节点的地址。
-discovery.zen.ping.unicast.hosts: ["192.168.10.90:9300","192.168.10.90:9301","192.168.10.90:9302"]
+discovery.zen.ping.unicast.hosts: ["192.168.10.91:9300","192.168.10.91:9301","192.168.10.91:9302"]
 
 #设置这个参数来保证集群中的节点可以知道其它N个有master资格的节点。默认为1。为了防止选举时发生“脑裂”，建议配置master节点数= （总结点数/2 + 1）
 discovery.zen.minimum_master_nodes: 2
