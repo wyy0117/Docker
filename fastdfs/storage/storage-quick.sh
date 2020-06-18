@@ -16,6 +16,6 @@ docker run -itd --restart=always --name $container_name --network=host \
 -v $base_path/conf/mime.types:/etc/fdfs/mime.types \
 -v $base_path/conf/nginx.conf:/usr/local/nginx/conf/nginx.conf \
 -v $base_path/dfs:/home/dfs \
--v $base_path/dfs/logs:/usr/local/nginx/logs wyy349093330/fastdfs-storage:6.0.6
+-v $base_path/dfs/logs:/usr/local/nginx/logs wyy349093330/fastdfs-storage:6.06
 
 
