@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-base_path=~/docker/data/redis
+base_path=/Volumes/home/docker/data/redis
 container_name=redis
 port=6379
 
