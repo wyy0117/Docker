@@ -4,9 +4,10 @@ base_path=/Users/wyy/home/docker/data/seata
 container_name=seata
 port=8091
 seata_ip=192.168.1.10
-nacos_addr=192.168.10.11:8848
+nacos_addr=192.168.10.11
+nacos_port=8848
 
-./nacos-config.sh $nacos_addr
+./nacos-config.sh -h $nacos_addr -p $nacos_port
 
 mkdir -p $base_path/conf
 
