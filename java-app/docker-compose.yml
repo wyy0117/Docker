@@ -14,5 +14,4 @@ services:
       - 8130:8080
 
     volumes:
-      - ~/docker/data/javappp/logs:/app/logs
-      - ~/docker/data/javappp/temp:/app/tmp
+      - ~/docker/data/javappp:/app
