@@ -10,4 +10,5 @@ services:
 
     volumes:
       - /data/hlxl/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - /data/log:/var/log/nginx
 
