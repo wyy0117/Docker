@@ -16,8 +16,8 @@ def get_ip():
 
 
 """
-删除某一目录下的所有文件或文件夹
-:param filepath: 路径
+delete all file and folder in the filepath
+:param filepath
 :return:
 """
 
@@ -59,22 +59,22 @@ print('backup files save to %s' % (dest))
 datestr = time.strftime("%Y-%m-%d", time.localtime())
 containernames = os.popen("docker ps -a --format 'table {{.Names}}'").read().split('\n')
 
-# 移除 NAMES和空字符串
+# remove 'NAMES' and ''
 containernames.remove('NAMES')
 containernames.remove('')
 
 i = 0
 while i < len(containernames):
     container = containernames[i]
-    # 容器制作为镜像
+    # create image from container
     commitcommand = 'docker commit %s %s-bak' % (container, container)
     print(commitcommand)
     os.system(commitcommand)
-    # 镜像导出为tar
+    # export image to tar file
     exportcommand = 'docker save %s-bak -o %s/%s-%s-%s.tar' % (container, dest, ip, container, datestr)
     print(exportcommand)
     os.system(exportcommand)
-    # 解析inspect
+    # analyse container use inspect
     inspectcommand = 'docker inspect %s > %s/%s-%s-%s-inspect.json' % (container, dest, ip, container, datestr)
     print(inspectcommand)
     os.system(inspectcommand)
