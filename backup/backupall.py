@@ -1,8 +1,9 @@
 import argparse
+import json
 import os
-import shutil
 import socket
 import time
+from os.path import join
 
 
 def get_ip():
@@ -15,30 +16,23 @@ def get_ip():
     return ip
 
 
-"""
-delete all file and folder in the filepath
-:param filepath
-:return:
-"""
-
-
-def del_files(filepath):
-    del_list = os.listdir(filepath)
-    for f in del_list:
-        file_path = os.path.join(filepath, f)
-        if os.path.isfile(file_path):
-            os.remove(file_path)
-        elif os.path.isdir(file_path):
-            shutil.rmtree(file_path)
+def get_folder_size(folder):
+    size = 0
+    for root, dirs, files in os.walk(folder):
+        size += sum([os.path.getsize(join(root, name)) for name in files])
+    return size
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dest', type=str, default='.', help='the folder path to save container')
 parser.add_argument('--ip', type=str, help='ip address')
+parser.add_argument('--bigfile', type=int, default=1024 * 1024 * 1024,
+                    help='file or folder exceed it will not backup,default is 1024*1024*1024 byte (1G)')
 args = parser.parse_args()
 
 ip = args.ip
 dest = args.dest
+bigfile = args.bigfile
 
 if ip == None:
     print('no ip args,get it by code')
@@ -46,36 +40,71 @@ if ip == None:
 
 print('ip : %s' % (ip))
 print('folder path : %s' % (dest))
+print('bigfile : %d' % (bigfile))
 
-dest = dest + '/backup'
-if not os.path.isdir(dest):
-    os.mkdir(dest)
+docker_backup = dest + '/dockerbackup'
+mkdir_command = 'mkdir -p %s' % (docker_backup)
+print(mkdir_command)
+system = os.system(mkdir_command)
 
-print("clear dest folder : %s" % (dest))
-del_files(dest)
+print("clear dockerbackup folder : %s" % (docker_backup))
+delete_files_command = 'rm -rf %s/*' % (docker_backup)
+print(delete_files_command)
+os.system(delete_files_command)
 
-print('backup files save to %s' % (dest))
+print('backup files save to %s' % (docker_backup))
 
-datestr = time.strftime("%Y-%m-%d", time.localtime())
-containernames = os.popen("docker ps -a --format 'table {{.Names}}'").read().split('\n')
+date_str = time.strftime("%Y-%m-%d", time.localtime())
+container_names = os.popen("docker ps -a --format 'table {{.Names}}'").read().split('\n')
 
 # remove 'NAMES' and ''
-containernames.remove('NAMES')
-containernames.remove('')
+container_names.remove('NAMES')
+container_names.remove('')
 
-i = 0
-while i < len(containernames):
-    container = containernames[i]
-    # create image from container
-    commitcommand = 'docker commit %s %s-bak' % (container, container)
-    print(commitcommand)
-    os.system(commitcommand)
-    # export image to tar file
-    exportcommand = 'docker save %s-bak -o %s/%s-%s-%s.tar' % (container, dest, ip, container, datestr)
-    print(exportcommand)
-    os.system(exportcommand)
+for container in container_names:
+
     # analyse container use inspect
-    inspectcommand = 'docker inspect %s > %s/%s-%s-%s-inspect.json' % (container, dest, ip, container, datestr)
-    print(inspectcommand)
-    os.system(inspectcommand)
-    i += 1
+    inspect_file = '%s/%s-%s-%s-inspect.json' % (docker_backup, ip, container, date_str)
+    inspect_command = 'docker inspect %s > %s' % (container, inspect_file)
+    print(inspect_command)
+    os.system(inspect_command)
+
+    with open(inspect_file, 'r') as f:
+        inspect = json.load(f)
+        mounts = inspect[0]['Mounts']
+        # copy mount file and folder to here
+        store_mount_folder_path = '%s/%s' % (docker_backup, container)
+        mkdir_command = 'mkdir -p %s' % (store_mount_folder_path)
+        print(mkdir_command)
+        os.system(mkdir_command)
+        for mount in mounts:
+            source = mount['Source']
+            if (os.path.isfile(source) and os.path.getsize(source) > bigfile):
+                print('file : %s size exceed %d ,not copy backup' % (source, bigfile))
+                continue
+
+            folder_size = get_folder_size(source)
+            if folder_size > bigfile:
+                print('folder : %s size exceed %d ,not backup ' % (source, bigfile))
+                continue
+
+            copycommand = 'cp -r %s %s/.' % (source, store_mount_folder_path)
+            print(copycommand)
+            os.system(copycommand)
+    tar_filename = '%s-%s-%s.tar.gz' % (ip, container, date_str)
+    tar_command = 'tar -zcvf %s/%s %s' % (docker_backup, tar_filename, store_mount_folder_path)
+    print(tar_command)
+    os.system(tar_command)
+
+    delete_store_mount_folder_command = 'rm -rf %s' % (store_mount_folder_path)
+    print(delete_store_mount_folder_command)
+    os.system(delete_store_mount_folder_command)
+
+    # create image from container
+    commit_command = 'docker commit %s %s-bak' % (container, container)
+    print(commit_command)
+    os.system(commit_command)
+    # export image to tar file
+    export_command = 'docker save %s-bak -o %s/%s-%s-%s.tar' % (container, docker_backup, ip, container, date_str)
+    print(export_command)
+    os.system(export_command)
