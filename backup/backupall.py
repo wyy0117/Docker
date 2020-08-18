@@ -24,8 +24,10 @@ def get_folder_size(folder):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dest', type=str, default='.', help='the folder path to save container')
+parser.add_argument('--dest', type=str, default=os.path.realpath(''), help='the folder path to save container')
 parser.add_argument('--ip', type=str, help='ip address')
+parser.add_argument('--backup-all', type=bool, default=False,
+                    help='backup all files,include very big files,and --bigfile arg will invalid,default false')
 parser.add_argument('--bigfile', type=int, default=1024 * 1024 * 1024,
                     help='file or folder exceed it will not backup,default is 1024*1024*1024 byte (1G)')
 args = parser.parse_args()
@@ -33,6 +35,7 @@ args = parser.parse_args()
 ip = args.ip
 dest = args.dest
 bigfile = args.bigfile
+backup_all = args.backup_all
 
 if ip == None:
     print('no ip args,get it by code')
@@ -41,6 +44,7 @@ if ip == None:
 print('ip : %s' % (ip))
 print('folder path : %s' % (dest))
 print('bigfile : %d' % (bigfile))
+print('backup all : %s' % (str(backup_all)))
 
 docker_backup = dest + '/dockerbackup'
 mkdir_command = 'mkdir -p %s' % (docker_backup)
@@ -79,18 +83,20 @@ for container in container_names:
         os.system(mkdir_command)
         for mount in mounts:
             source = mount['Source']
-            if (os.path.isfile(source) and os.path.getsize(source) > bigfile):
+            # not backup all and is big file
+            if ((not backup_all) and os.path.isfile(source) and os.path.getsize(source) > bigfile):
                 print('file : %s size exceed %d ,not copy backup' % (source, bigfile))
                 continue
 
             folder_size = get_folder_size(source)
-            if folder_size > bigfile:
+            # not backup all and is big folder
+            if (not backup_all) and folder_size > bigfile:
                 print('folder : %s size exceed %d ,not backup ' % (source, bigfile))
                 continue
 
-            copycommand = 'cp -r %s %s/.' % (source, store_mount_folder_path)
-            print(copycommand)
-            os.system(copycommand)
+            copy_command = 'cp -r %s %s/.' % (source, store_mount_folder_path)
+            print(copy_command)
+            os.system(copy_command)
     tar_filename = '%s-%s-%s.tar.gz' % (ip, container, date_str)
     tar_command = 'tar -zcvf %s/%s %s' % (docker_backup, tar_filename, store_mount_folder_path)
     print(tar_command)
