@@ -73,14 +73,10 @@ for container in container_names:
     print(inspect_command)
     os.system(inspect_command)
 
+    tar_files = ''
     with open(inspect_file, 'r') as f:
         inspect = json.load(f)
         mounts = inspect[0]['Mounts']
-        # copy mount file and folder to here
-        store_mount_folder_path = '%s/%s' % (docker_backup, container)
-        mkdir_command = 'mkdir -p %s' % (store_mount_folder_path)
-        print(mkdir_command)
-        os.system(mkdir_command)
         for mount in mounts:
             source = mount['Source']
             # not backup all and is big file
@@ -94,17 +90,11 @@ for container in container_names:
                 print('folder : %s size exceed %d ,not backup ' % (source, bigfile))
                 continue
 
-            copy_command = 'cp -r %s %s/.' % (source, store_mount_folder_path)
-            print(copy_command)
-            os.system(copy_command)
+            tar_files = tar_files + source + ' '
     tar_filename = '%s-%s-%s.tar.gz' % (ip, container, date_str)
-    tar_command = 'tar -zcvf %s/%s %s' % (docker_backup, tar_filename, store_mount_folder_path)
+    tar_command = 'tar -zcvf %s/%s %s' % (docker_backup, tar_filename, tar_files)
     print(tar_command)
     os.system(tar_command)
-
-    delete_store_mount_folder_command = 'rm -rf %s' % (store_mount_folder_path)
-    print(delete_store_mount_folder_command)
-    os.system(delete_store_mount_folder_command)
 
     # create image from container
     commit_command = 'docker commit %s %s-bak' % (container, container)
