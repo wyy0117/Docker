@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-base_path=~/docker/data/nginx
+base_path=~/cache/docker/data/nginx
 port=80
 container_name=nginx
 
@@ -10,5 +10,5 @@ docker run -itd --restart=always \
   --name=$container_name \
   -p $port:80 \
   -v $base_path/conf/nginx.conf:/etc/nginx/nginx.conf \
-  -v $base_path/log:/var/log/nginx
+  -v $base_path/log:/var/log/nginx \
 nginx
