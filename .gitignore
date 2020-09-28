@@ -19,3 +19,4 @@ build/
 *.log
 
 /jrecontainer
+.DS_Store
