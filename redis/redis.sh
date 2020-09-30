@@ -7,5 +7,10 @@ port=6379
 mkdir -p $base_path/{conf,data}
 cp ./redis.conf $base_path/conf/.
 
-docker run -itd -p $port:6379 --name $container_name -v $base_path/conf/redis.conf:/usr/local/etc/redis/redis.conf -v $base_path/data:/data redis
-
+docker run -itd \
+  --restart always \
+  -p $port:6379 \
+  --name $container_name \
+  -v $base_path/conf/redis.conf:/usr/local/etc/redis/redis.conf \
+  -v $base_path/data:/data \
+  redis
