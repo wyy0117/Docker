@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-base_path=/Volumes/home/docker/data/redis
+base_path=/data/redis
 container_name=redis
 port=6379
 
@@ -9,6 +9,7 @@ cp ./redis.conf $base_path/conf/.
 
 docker run -itd \
   --restart always \
+  -m 2g \
   -p $port:6379 \
   --name $container_name \
   -v $base_path/conf/redis.conf:/usr/local/etc/redis/redis.conf \
